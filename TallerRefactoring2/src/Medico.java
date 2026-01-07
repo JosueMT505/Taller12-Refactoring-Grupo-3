@@ -5,14 +5,12 @@ public class Medico extends Persona {
     }
 
     public void realizaConsul(Paciente paciente, HistorialMedico medico, SistemaAtencionMedico sistemaAtencionMedico) {
-        String tratamiento;
         System.out.println("Realizando consulta a " + paciente.getNombre() +
                 " (Solo se usa el objeto persona en este metodo...)");
-        tratamiento = "Conservador...";
-        prescribirTratamiento(paciente, tratamiento);
+        prescribirTratamiento(paciente, "Conservador...");
     }
 
-    public void prescribirTratamiento(Paciente paciente, String tratamiento) {
+    private void prescribirTratamiento(Paciente paciente, String tratamiento) {
         // Implementación para prescribir un tratamiento al paciente.
         System.out.println("Prescribiendo tratamineto... " +
                 "(Este metodo solo debe ser utilizado en esta clase, nadie mas lo puede utilizar)");
