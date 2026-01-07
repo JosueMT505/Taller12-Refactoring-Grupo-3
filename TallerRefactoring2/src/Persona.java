@@ -2,17 +2,15 @@ public class Persona {
     private String nombre;
     private int edad;
     private String genero;
-    private String direccion;
-    private String telefono;
-    private String correoElectronico;
+    private DatosCom Comunicacion;
+    
 
-    public Persona(String nombre, int edad, String genero, String direccion, String telefono, String correoElectronico) {
+    public Persona(String nombre, int edad, String genero, DatosCon Comunicacion) {
         this.nombre = nombre;
         this.edad = edad;
-        this.genero = genero;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.correoElectronico = correoElectronico;
+        this.Comunicacion = Comunicacion ;
+ ;
+        
     }
 
     public String getNombre() {
@@ -28,8 +26,12 @@ public class Persona {
     }
 
     public void setEdad(int edad) {
-        this.edad = edad;
+    if (edad < 0) {
+        throw new IllegalArgumentException("No se puede tener edad negativa");
     }
+    this.edad = edad;
+}
+
 
     public String getGenero() {
         return genero;
@@ -37,29 +39,6 @@ public class Persona {
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
+    }}
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-}
+   
