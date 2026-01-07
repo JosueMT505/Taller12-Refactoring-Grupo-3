@@ -17,9 +17,20 @@ public class Paciente extends Persona {
         return super.getEdad()>=EDAD_ADULTO_MAYOR;
     }
 
+        public void registrarConsultaEnHistorial(Consulta consulta) {
+        if (consulta != null) {
+            this.historialMedico.getConsultas().add(consulta);
+        }
+    }
+    
+    public int getCantidadConsultas() {
+        return this.historialMedico.getConsultas().size();
+    }
+    
     //Getter para historialMedico
     public HistorialMedico getHistorialMedico() {
         return historialMedico;
     }
 }
+
 
