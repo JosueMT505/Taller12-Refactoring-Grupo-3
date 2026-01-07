@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SistemaAtencionMedico {
+
+    private static final int EDAD_ADULTO_MAYOR = 65;
+    private static final double DESCUENTO_ADULTO_MAYOR = 0.25;
+
     private List<Paciente> pacientes;
     private List<Medico> medicos;
     private List<ServicioMedico> serviciosMedicos;
@@ -12,55 +16,55 @@ public class SistemaAtencionMedico {
         this.serviciosMedicos = new ArrayList<>();
     }
 
-    public void agregarPaciente(Paciente paciente) {
-        pacientes.add(paciente);
+    public void agregarServicioMedico(ServicioMedico servicioMedico) {
+        serviciosMedicos.add(servicioMedico);
     }
-
     public void agregarMedico(Medico medico) {
         medicos.add(medico);
     }
 
-    public void agregarServicioMedico(ServicioMedico servicioMedico) {
-        serviciosMedicos.add(servicioMedico);
-    }
-
-    public void agendarConsulta(Paciente paciente, Consulta consulta){
-        double costoConsulta = consulta.getServicioMedico().getCosto();
-        int edadPaciente = paciente.getEdad();
-        costoConsulta = calcularValorFinalConsulta(costoConsulta,edadPaciente);
-        System.out.println("Se han cobrado "+ costoConsulta+ " dolares de su tarjeta de credito");
-        paciente.getHistorialMedico().getConsultas().add(consulta); //Hacer esto es incorrecto
-    }
-
-    public double calcularValorFinalConsulta(double costoConsulta, int edadPaciente){
-        double valorARestar = 0;
-        if(edadPaciente>=65){
-            valorARestar = costoConsulta*0.25; //0.25 es el descuento para adultos mayores
+    public void agregarPaciente(Paciente paciente) {
+        if (paciente != null) {
+            pacientes.add(paciente);
         }
-        return costoConsulta-valorARestar;
     }
 
-    // se puede parametrizar (obtener...)
-    public Paciente obtenerPaciente(String nombrePaciente) {
-        for(Paciente paciente : pacientes){
-            if (paciente.getNombre().equals(nombrePaciente))
-                return paciente;
+    public void agendarConsulta(Paciente paciente, Consulta consulta) {
+        double costoBase = consulta.getServicioMedico().getCosto();
+
+        double costoFinal = calcularValorFinalConsulta(costoBase, paciente.getEdad());
+
+        System.out.println("Se han cobrado " + costoFinal + " dolares de su tarjeta de credito");
+
+        paciente.registrarConsultaEnHistorial(consulta);
+    }
+
+    public double calcularValorFinalConsulta(double costoConsulta, int edadPaciente) {
+        double descuento = 0;
+
+        if (edadPaciente >= EDAD_ADULTO_MAYOR) {
+            descuento = costoConsulta * DESCUENTO_ADULTO_MAYOR;
         }
-        return null;
+        return costoConsulta - descuento;
     }
 
-    public ServicioMedico obtenerServicioMedico(String nombreServicio) {
-        for(ServicioMedico servicioMedico : serviciosMedicos){
-            if (servicioMedico.getNombre().equals(nombreServicio))
-                return servicioMedico;
+    public Paciente obtenerPaciente(String nombre) {
+        for (Paciente p : pacientes) {
+            if (p.getNombre().equalsIgnoreCase(nombre)) return p;
         }
         return null;
     }
 
-    public Medico obtenerMedico(String nombreMedico) {
-        for(Medico medico : medicos){
-            if (medico.getNombre().equals(nombreMedico))
-                return medico;
+    public Medico obtenerMedico(String nombre) {
+        for (Medico m : medicos) {
+            if (m.getNombre().equalsIgnoreCase(nombre)) return m;
+        }
+        return null;
+    }
+
+    public ServicioMedico obtenerServicioMedico(String nombre) {
+        for (ServicioMedico s : serviciosMedicos) {
+            if (s.getNombre().equalsIgnoreCase(nombre)) return s;
         }
         return null;
     }
