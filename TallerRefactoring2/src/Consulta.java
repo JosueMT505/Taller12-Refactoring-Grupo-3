@@ -1,90 +1,68 @@
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Consulta {
-    public int dia;
-    public int mes;
-    public int año;
-    private String hora;
+
+    private LocalDateTime fechaHora;
     private Paciente paciente;
     private Medico medico;
     private ServicioMedico servicioMedico;
     private boolean realizada;
-    private String diagnostico;
+    private Diagnostico diagnostico;
     private String tratamiento;
+
     private List<String> examenesMedicos;
 
-    public Consulta(int dia, int mes, int año, String hora, Paciente paciente, Medico medico, ServicioMedico servicioMedico, String diagnostico, String tratamiento, List<String> examenesMedicos) {
-        this.dia = dia;
-        this.mes = mes;
-        this.año = año;
-        this.hora = hora;
+    public Consulta(LocalDateTime fechaHora, Paciente paciente, Medico medico, ServicioMedico servicioMedico) {
+        this.fechaHora = fechaHora;
+        this.paciente = paciente;
+        this.medico = medico;
         this.servicioMedico = servicioMedico;
-        this.paciente = paciente;
-        this.medico = medico;
         this.realizada = false;
+        this.examenesMedicos = new ArrayList<>();
     }
 
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
-    public boolean isRealizada() {
-        return realizada;
-    }
-
-    public void setRealizada(boolean realizada) {
-        this.realizada = realizada;
-    }
-
-    public String getDiagnostico() {
-        return diagnostico;
-    }
-
-    public void setDiagnostico(String diagnostico) {
+    public void registrarResultado(Diagnostico diagnostico) {
         this.diagnostico = diagnostico;
+        this.realizada = true;
     }
 
-    public String getTratamiento() {
-        return tratamiento;
+    public void programarNuevaFecha(LocalDateTime nuevaFecha) {
+        this.fechaHora = nuevaFecha;
     }
 
-    public void setTratamiento(String tratamiento) {
-        this.tratamiento = tratamiento;
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
     }
 
     public List<String> getExamenesMedicos() {
-        return examenesMedicos;
+        return Collections.unmodifiableList(examenesMedicos);
     }
 
-    public void setExamenesMedicos(List<String> examenesMedicos) {
-        this.examenesMedicos = examenesMedicos;
+    public void agregarExamenMedico(String examen) {
+        this.examenesMedicos.add(examen);
     }
 
-    public ServicioMedico getServicioMedico() {
-        return servicioMedico;
-    }
+    public Paciente getPaciente() { return paciente; }
+    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
 
-    public void setServicioMedico(ServicioMedico servicioMedico) {
-        this.servicioMedico = servicioMedico;
-    }
+    public Medico getMedico() { return medico; }
+    public void setMedico(Medico medico) { this.medico = medico; }
+
+    public ServicioMedico getServicioMedico() { return servicioMedico; }
+    public void setServicioMedico(ServicioMedico servicioMedico) { this.servicioMedico = servicioMedico; }
+
+    public boolean isRealizada() { return realizada; }
+    public void setRealizada(boolean realizada) { this.realizada = realizada; }
+
+    public Diagnostico getDiagnostico() { return diagnostico; }
+
+    public String getTratamiento() { return tratamiento; }
+    public void setTratamiento(String tratamiento) { this.tratamiento = tratamiento; }
 }
